@@ -1,0 +1,12 @@
+*.DS_store
+*.log
+*.sublime*
+
+/node_modules/
+/app/components
+/dist/
+/test/output/
+/.sass-cache/
+/.tmp/
+/gzip/
+/config/global.json
