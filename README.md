@@ -1,1 +1,2 @@
-Cloud code project for cover. Cloud Code Guide: https://cn.avoscloud.com/docs/cloud_code_guide.html
+
+xiamiRun + LeanCloud
