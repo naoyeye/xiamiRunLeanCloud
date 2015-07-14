@@ -61,7 +61,13 @@ app.get('/run', function(req, res) {
                 xiamiRealSong.artist =  toTxt(responsive.playlist.trackList.track.artist.text());
                 xiamiRealSong.album = toTxt(responsive.playlist.trackList.track.album_name.text());
                 xiamiRealSong.url = getMp3Location(responsive.playlist.trackList.track.location.text());
-                xiamiRealSong.lyricUrl = toTxt(responsive.playlist.trackList.track.lyric_url.text());
+
+                if (typeof responsive.playlist.trackList.track.lyric_url.text !== 'undefined') {
+                    xiamiRealSong.lyricUrl = toTxt(responsive.playlist.trackList.track.lyric_url.text());
+                } else {
+                    xiamiRealSong.lyricUrl = null;
+                }
+                
 
                 // 封面处理
                 var cover;
