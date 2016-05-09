@@ -33,7 +33,10 @@ app.get('/run', function(req, res) {
     var pageUrl = req.param('song');
 
     if (!isXiamiSong.test(pageUrl)) {
-        res.jsonp({'status': 'the url is error'});
+        res.jsonp({
+            'error': 1,
+            'message':'url 有误，应为：http://www.xiami.com/song/xxxx 格式'
+        });
         return;
     }
 
@@ -53,7 +56,15 @@ app.get('/run', function(req, res) {
         resp.on('end', function() {
             xmlreader.read(xml, function(errors, responsive){
                 if(null !== errors ){
-                    console.log('errors', errors)
+                    // console.log('errors', errors)
+                    return;
+                }
+
+                if (!responsive.playlist) {
+                    res.jsonp({
+                        'error': 1,
+                        'message': '没找到相关信息，该歌曲很可能已经从虾米下架。'
+                    });
                     return;
                 }
 
