@@ -54,6 +54,7 @@ app.get('/run', function(req, res) {
         })
 
         resp.on('end', function() {
+            console.log('xml', xml);
             xmlreader.read(xml, function(errors, responsive){
                 if(null !== errors ){
                     // console.log('errors', errors)
@@ -69,7 +70,7 @@ app.get('/run', function(req, res) {
                 }
 
                 xiamiRealSong.title = toTxt(responsive.playlist.trackList.track.title.text());
-                xiamiRealSong.artist =  toTxt(responsive.playlist.trackList.track.artist.text());
+                xiamiRealSong.artist = parseArtist(responsive.playlist.trackList.track);
                 xiamiRealSong.album = toTxt(responsive.playlist.trackList.track.album_name.text());
                 xiamiRealSong.url = getMp3Location(responsive.playlist.trackList.track.location.text());
 
@@ -167,6 +168,15 @@ function getMp3Location(str) {
     }
 }
 
+function parseArtist(track) {
+    if (track.artist.hasOwnProperty('text')) {
+        return toTxt(track.artist.text())
+    } else if (track.artist_name.hasOwnProperty('text')) {
+        return toTxt(track.artist_name.text())
+    } else {
+        return '未知艺术家';
+    }
+}
 
 
 
