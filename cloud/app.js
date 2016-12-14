@@ -54,7 +54,6 @@ app.get('/run', function(req, res) {
         })
 
         resp.on('end', function() {
-            console.log('xml', xml);
             xmlreader.read(xml, function(errors, responsive){
                 if(null !== errors ){
                     // console.log('errors', errors)
