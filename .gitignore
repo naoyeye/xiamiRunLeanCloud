@@ -9,3 +9,15 @@
 /.sass-cache/
 /.tmp/
 /gzip/
+
+node_modules
+npm-debug.log
+start.sh
+.avoscloud
+.leancloud
+.DS_Store
+*.log
+
+# VIM
+*~
+*.swp

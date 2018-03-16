@@ -1,16 +1,32 @@
 
-## xiamiRun (express.js)
+## xiamiRun 
 
+这是一个运行在 leancloud 上的应用，用来根据虾米音乐详情页 url 来获取虾米 mp3 音乐地址。
 
-```
+demo:
+
+http://xiamirun.avosapps.com/?song=http://www.xiami.com/song/1771958613
+或者
+https://xiamirun.leanapp.cn/?song=http://www.xiami.com/song/1771958613
+
+https://xiamirun.leanapp.cn/?song=http://www.xiami.com/song/etgVz330ee?spm=a1z1s.6659509.0.0.BeYfgK
+
+```bash
 git clone git@github.com:naoyeye/xiamiRunLeanCloud.git
 cd xiamiRunLeanCloud
-node install .
-node cloud/app.js
-```
+yarn
 
-http://localhost:8080/run?song=http://www.xiami.com/song/1773110382
+# 去 leancloud 创建应用
+
+lean switch # 关联你刚刚创建的应用
+lean up # 本地启动
+# 访问 http://localhost:3080/?song=http://www.xiami.com/song/1773110382
+
+lean deploy # 部署到预备环境
+lean publish # 部署到到生产环境
+```
 
 
 ----
-xiamiRun(sail.js):  https://github.com/naoyeye/xiamiRun
+sail.js 版（已废弃）：
+xiamiRun: https://github.com/naoyeye/xiamiRun

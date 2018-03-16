@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>虾跑 | XiamiRun</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+  </head>
+  <body>
+    <h1>虾跑</h1>
+    <p>
+      <form action="/" method="post">
+        <input type="text" name="url" placeholder="复制虾米歌曲地址到这里" />
+        <button type="submit">搜索</button>
+      </form>
+    </p>
+
+    <% if (result) { %>
+    <div>
+      <% if (result.success) { %>
+        获取成功。<br/>
+        <%= result.artists %> - <%= result.title %><br/>
+        <a href="<%= result.url %>">点击下载</a>
+      <% } else { %>
+      获取失败。
+      <% } %>
+    </div>
+    <% } %>
+    
+  </body>
+</html>
