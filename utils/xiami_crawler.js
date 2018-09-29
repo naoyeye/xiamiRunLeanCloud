@@ -536,7 +536,7 @@ function getSongContent (id, userToken = null) {
       }
     }
 
-    http.get(options, (res) => {
+    https.get(options, (res) => {
       const { statusCode } = res
 
       let error

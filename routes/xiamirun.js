@@ -1,77 +1,105 @@
 /*
 * @Author: naoyeye
 * @Date:   2018-03-16 14:07:25
-* @Last Modified by:   naoyeye
-* @Last Modified time: 2018-03-16 19:19:07
+* @Last Modified by:   hanjiyun
+* @Last Modified time: 2018-09-29 16:28:24
 */
 'use strict';
-var router = require('express').Router();
+const router = require('express').Router()
 
-var XIAMI = require('./../utils/song');
+const XIAMI = require('./../utils/song')
+const https = require('https')
+const url = require('url')
 
-
-var isXiamiSong = /(http(s)?:\/\/)?(www\.)?xiami.com\/(song\/[\w-./?%&=]*)?$/;
+const isXiamiSong = /(http(s)?:\/\/)?(www\.)?xiami.com\/(song\/[\w-./?%&=]*)?$/
 
 router.get('/', (req, res, next) => {
   res.render('index', {
     "result": null
-  });
+  })
 })
 
 router.post('/', (req, res, next) => {
 
-  var pageUrl = req.body.url;
+  const pageUrl = req.body.url
 
   if (!pageUrl || !isXiamiSong.test(pageUrl)) {
-    console.log('出错了')
     res.render('index', {
       'result': {
         'success': false,
         'url': null,
-        'message':'url 有误，应为：http://www.xiami.com/song/xxxx 格式'
+        'message':'url 有误，应为：https://www.xiami.com/song/xxxx 格式'
       }
-    });
-
-    // res.jsonp({
-    //   'success': false,
-    //   'url': null,
-    //   'message':'url 有误，应为：http://www.xiami.com/song/xxxx 格式'
-    // });
-    // return;
+    })
   }
 
-  var songFlag = pageUrl.split('song/')[1].split('?')[0]
+  const songMid = pageUrl.split('song/')[1].split('?')[0]
   
-  XIAMI.Song.getContent(songFlag).then((data) => {
+  XIAMI.Song.getContent(songMid).then((data) => {
     const songId = data.id
     const title = data.title
     let artists = ''
+    const coverURL = data.album.coverURL.href
+    const albumTitle = data.album.title
 
     data.artists.map((artistItem) => {
-      // console.log('artistItem - ', artistItem)
       artists = artists + artistItem.name
     })
 
-    // console.log(title, artists)
+    // 第三方服务
+    const doutingFactory = url.parse(`https://douting.leanapp.cn/api/get/song/xiami?id=${songId}`)
 
-    // res.jsonp(data);
+    https.get(doutingFactory, (resp) => {
+      resp.setEncoding('utf8')
+      let json = ''
 
-    XIAMI.Song.getHQAudioURL(songId).then((data) => {
-      let _data = data;
+      resp.on('data', (req) => {
+        if (req.status === 1) {
+          res.jsonp({
+            'success': false,
+            'url': null,
+            'message':'解析失败'
+          })
+          return
+        }
 
-      if (!data.success || !data.url) {
-        _data.message = '获取失败';
-      } else {
-        _data.message = '获取成功';
-        _data.title = title;
-        _data.artists = artists;
-      }
-       res.render('index', {
-        'result': _data,
+        json += req
+        json = JSON.parse(json)
 
-      });
-      // res.jsonp(_data);
-    });
+        if (!json.success || !json.url) {
+          json.message = '获取失败';
+        } else {
+          json.message = '获取成功';
+          json.title = title;
+          json.artists = artists;
+          json.albumTitle = albumTitle
+          json.coverURL = coverURL
+        }
+
+        res.render('index', {
+          'result': json,
+        })
+
+      })
+    })
+
+
+    // XIAMI.Song.getHQAudioURL(songId).then((data) => {
+    //   let _data = data;
+
+    //   if (!data.success || !data.url) {
+    //     _data.message = '获取失败';
+    //   } else {
+    //     _data.message = '获取成功';
+    //     _data.title = title;
+    //     _data.artists = artists;
+    //   }
+    //    res.render('index', {
+    //     'result': _data,
+
+    //   });
+    //   // res.jsonp(_data);
+    // });
   })
 
 });
