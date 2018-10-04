@@ -5,11 +5,9 @@
 
 demo:
 
-http://xiamirun.avosapps.com/?song=http://www.xiami.com/song/1771958613
-或者
-https://xiamirun.leanapp.cn/?song=http://www.xiami.com/song/1771958613
+https://xiamirun.leanapp.cn/
 
-https://xiamirun.leanapp.cn/?song=http://www.xiami.com/song/etgVz330ee?spm=a1z1s.6659509.0.0.BeYfgK
+
 
 ```bash
 git clone git@github.com:naoyeye/xiamiRunLeanCloud.git
