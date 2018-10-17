@@ -26,5 +26,5 @@ lean publish # 部署到到生产环境
 
 
 ----
-sail.js 版（已废弃）：
+通用版：
 xiamiRun: https://github.com/naoyeye/xiamiRun
