@@ -5,35 +5,45 @@
     <link rel="stylesheet" href="/stylesheets/style.css">
   </head>
   <body>
-    <h1>虾跑</h1>
-    <p>
-      <form action="/" method="post">
-        <input type="text" name="url" placeholder="复制虾米歌曲地址到这里" />
-        <button type="submit">搜索</button>
-      </form>
-    </p>
+    <header>
+      <h1>虾跑</h1>
+      <a target="_black" href="https://github.com/naoyeye/xiamiRunLeanCloud">github</a>
+    </header>
 
-    <% if (result) { %>
-    <div>
-      <% if (result.success) { %>
-        获取成功。<br/>
+    <content>
+      <p>
+        <form action="/" method="post">
+          <input type="text" name="url" placeholder="复制虾米歌曲地址到这里" />
+          <button type="submit">搜索</button>
+        </form>
+      </p>
 
-        <div style="margin:20px;">
-          <img src="<%= result.coverURL %>" width="140" />
-        </div>
+      <% if (result) { %>
+      <div>
+        <% if (result.success) { %>
+          获取成功。<br/>
 
-        <ul>
-          <li>歌曲名称：<%= result.title %></li>
-          <li>艺术家：<%= result.artists %></li>
-          <li>专辑名：<%= result.albumTitle %></li>
-        </ul>
+          <div style="margin:20px;">
+            <img src="<%= result.coverURL %>" width="140" />
+          </div>
 
-        <a href="<%= result.url %>">点击下载</a>
-      <% } else { %>
-      获取失败。<%= result.message %>
+          <ul>
+            <li>歌曲名称：<%= result.title %></li>
+            <li>艺术家：<%= result.artists %></li>
+            <li>专辑名：<%= result.albumTitle %></li>
+          </ul>
+
+          <a href="<%= result.url %>">点击下载</a>
+        <% } else { %>
+        获取失败。<%= result.message %>
+        <% } %>
+      </div>
       <% } %>
-    </div>
-    <% } %>
+    </content>
+
+    <footer>
+      &copy; 2018. made by <a href="http://han.im" target="_blank">han.im</a>
+    </footer>
     
   </body>
 </html>

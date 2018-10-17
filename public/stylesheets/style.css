@@ -4,6 +4,8 @@ body {
 }
 a {
   color: #00b7ff;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 input {
@@ -33,3 +35,8 @@ button {
   border: none;
   cursor: pointer;
 }
+
+footer {
+  margin-top: 300px;
+}
+

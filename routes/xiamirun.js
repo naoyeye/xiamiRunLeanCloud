@@ -2,7 +2,7 @@
 * @Author: naoyeye
 * @Date:   2018-03-16 14:07:25
 * @Last Modified by:   hanjiyun
-* @Last Modified time: 2018-09-30 15:58:45
+* @Last Modified time: 2018-10-17 17:33:17
 */
 'use strict';
 const router = require('express').Router()
@@ -34,15 +34,16 @@ router.post('/', (req, res, next) => {
   const songMid = pageUrl.split('song/')[1].split('?')[0]
   
   XIAMIAPI.Song.getContent(songMid).then((data) => {
+    // console.log('data = ', data)
     res.render('index', {
       result: data,
     })
   }).catch(err => {
-    console.error(err)
+    console.error('出错了', err)
     res.render('index', {
       result: {
         success: false,
-        message: '获取失败'
+        message: err.message
       }
     })
   })
